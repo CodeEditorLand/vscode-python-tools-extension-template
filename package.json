@@ -1,35 +1,21 @@
 {
-	"name": "<pytool-module>",
-	"displayName": "<pytool-display-name>",
-	"version": "0.0.1",
-	"private": false,
-	"description": "Linting support for python files using `<pytool-module>`.",
-	"keywords": [
-		"land"
+	"activationEvents": [
+		"onLanguage:python",
+		"workspaceContains:*.py"
 	],
-	"homepage": "HTTPS://GitHub.Com/CodeEditorLand/LandPythonToolsExtensionTemplate#readme",
+	"author": {
+		"email": "Land@PlayForm.Cloud",
+		"name": "🌆 — Land —",
+		"url": "HTTPS://Land.PlayForm.Cloud"
+	},
 	"bugs": {
 		"url": "HTTPS://GitHub.Com/CodeEditorLand/LandPythonToolsExtensionTemplate/issues"
 	},
-	"repository": {
-		"type": "git",
-		"url": "git+HTTPS://github.com/CodeEditorLand/LandPythonToolsExtensionTemplate.git"
-	},
-	"license": "SEE LICENSE IN LICENSE",
-	"author": {
-		"name": "🌆 — Land —",
-		"email": "Land@PlayForm.Cloud",
-		"url": "HTTPS://Land.PlayForm.Cloud"
-	},
-	"type": "module",
-	"main": "./dist/extension.js",
-	"scripts": {
-		"Document": "Document 'Source/**/*.ts'",
-		"compile": "webpack",
-		"compile-tests": "tsc -p . --outDir out",
-		"prepublishOnly": "Build 'Source/**/*.ts'",
-		"vsce-package": "vsce package -o <pytool-module>.vsix",
-		"watch-tests": "tsc -p . -w --outDir out"
+	"capabilities": {
+		"virtualWorkspaces": {
+			"description": "Virtual Workspaces are not supported with <pytool-display-name>.",
+			"supported": false
+		}
 	},
 	"contributes": {
 		"commands": [
@@ -103,13 +89,10 @@
 			}
 		}
 	},
-	"activationEvents": [
-		"onLanguage:python",
-		"workspaceContains:*.py"
-	],
 	"dependencies": {
 		"fs-extra": "11.2.0"
 	},
+	"description": "Linting support for python files using `<pytool-module>`.",
 	"devDependencies": {
 		"@playform/build": "0.0.7",
 		"@playform/document": "0.0.6",
@@ -119,25 +102,42 @@
 		"glob": "10.3.12",
 		"ts-loader": "9.5.1"
 	},
+	"displayName": "<pytool-display-name>",
 	"extensionDependencies": [
 		"ms-python.python"
 	],
-	"publishConfig": {
-		"access": "public"
-	},
 	"galleryBanner": {
 		"color": "#1e415e",
 		"theme": "dark"
 	},
+	"homepage": "HTTPS://GitHub.Com/CodeEditorLand/LandPythonToolsExtensionTemplate#readme",
+	"keywords": [
+		"land"
+	],
+	"license": "SEE LICENSE IN LICENSE",
+	"main": "./dist/extension.js",
+	"name": "<pytool-module>",
 	"preview": true,
-	"capabilities": {
-		"virtualWorkspaces": {
-			"description": "Virtual Workspaces are not supported with <pytool-display-name>.",
-			"supported": false
-		}
+	"private": false,
+	"publishConfig": {
+		"access": "public"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+HTTPS://github.com/CodeEditorLand/LandPythonToolsExtensionTemplate.git"
+	},
+	"scripts": {
+		"Document": "Document 'Source/**/*.ts'",
+		"compile": "webpack",
+		"compile-tests": "tsc -p . --outDir out",
+		"prepublishOnly": "Build 'Source/**/*.ts'",
+		"vsce-package": "vsce package -o <pytool-module>.vsix",
+		"watch-tests": "tsc -p . -w --outDir out"
 	},
 	"serverInfo": {
 		"module": "<pytool-module>",
 		"name": "<pytool-display-name>"
-	}
+	},
+	"type": "module",
+	"version": "0.0.1"
 }
