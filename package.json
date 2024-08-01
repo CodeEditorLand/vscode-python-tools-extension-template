@@ -88,8 +88,8 @@
 	"devDependencies": {
 		"@types/fs-extra": "11.0.4",
 		"@types/glob": "8.1.0",
-		"@types/node": "16.0",
-		"glob": "10.3.10",
+		"@types/node": "22.0",
+		"glob": "11.0.0",
 		"ts-loader": "9.5.1"
 	},
 	"displayName": "<pytool-display-name>",
