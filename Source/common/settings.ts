@@ -17,6 +17,7 @@ export interface ISettings {
 	args: string[];
 	path: string[];
 	interpreter: string[];
+
 	importStrategy: string;
 	showNotifications: string;
 }
@@ -37,7 +38,9 @@ function resolveVariables(
 	workspace?: WorkspaceFolder,
 ): string[] {
 	const substitutions = new Map<string, string>();
+
 	const home = process.env.HOME || process.env.USERPROFILE;
+
 	if (home) {
 		substitutions.set("${userHome}", home);
 	}
@@ -45,6 +48,7 @@ function resolveVariables(
 		substitutions.set("${workspaceFolder}", workspace.uri.fsPath);
 	}
 	substitutions.set("${cwd}", process.cwd());
+
 	getWorkspaceFolders().forEach((w) => {
 		substitutions.set("${workspaceFolder:" + w.name + "}", w.uri.fsPath);
 	});
@@ -62,6 +66,7 @@ export function getInterpreterFromSetting(
 	scope?: ConfigurationScope,
 ) {
 	const config = getConfiguration(namespace, scope);
+
 	return config.get<string[]>("interpreter");
 }
 
@@ -73,8 +78,10 @@ export async function getWorkspaceSettings(
 	const config = getConfiguration(namespace, workspace.uri);
 
 	let interpreter: string[] = [];
+
 	if (includeInterpreter) {
 		interpreter = getInterpreterFromSetting(namespace, workspace) ?? [];
+
 		if (interpreter.length === 0) {
 			interpreter =
 				(await getInterpreterDetails(workspace.uri)).path ?? [];
@@ -90,6 +97,7 @@ export async function getWorkspaceSettings(
 		importStrategy: config.get<string>(`importStrategy`) ?? "useBundled",
 		showNotifications: config.get<string>(`showNotifications`) ?? "off",
 	};
+
 	return workspaceSetting;
 }
 
@@ -99,6 +107,7 @@ function getGlobalValue<T>(
 	defaultValue: T,
 ): T {
 	const inspect = config.inspect<T>(key);
+
 	return inspect?.globalValue ?? inspect?.defaultValue ?? defaultValue;
 }
 
@@ -109,8 +118,10 @@ export async function getGlobalSettings(
 	const config = getConfiguration(namespace);
 
 	let interpreter: string[] = [];
+
 	if (includeInterpreter) {
 		interpreter = getGlobalValue<string[]>(config, "interpreter", []);
+
 		if (interpreter === undefined || interpreter.length === 0) {
 			interpreter = (await getInterpreterDetails()).path ?? [];
 		}
@@ -133,6 +144,7 @@ export async function getGlobalSettings(
 			"off",
 		),
 	};
+
 	return setting;
 }
 
@@ -147,6 +159,8 @@ export function checkIfConfigurationChanged(
 		`${namespace}.importStrategy`,
 		`${namespace}.showNotifications`,
 	];
+
 	const changed = settings.map((s) => e.affectsConfiguration(s));
+
 	return changed.includes(true);
 }

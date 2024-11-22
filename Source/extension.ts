@@ -37,7 +37,9 @@ export async function activate(
 	// This is required to get server name and module. This should be
 	// the first thing that we do in this extension.
 	const serverInfo = loadServerDefaults();
+
 	const serverName = serverInfo.name;
+
 	const serverId = serverInfo.module;
 
 	// Setup logging
@@ -65,6 +67,7 @@ export async function activate(
 
 	const runServer = async () => {
 		const interpreter = getInterpreterFromSetting(serverId);
+
 		if (interpreter && interpreter.length > 0) {
 			if (checkVersion(await resolveInterpreter(interpreter))) {
 				traceVerbose(
@@ -81,6 +84,7 @@ export async function activate(
 		}
 
 		const interpreterDetails = await getInterpreterDetails();
+
 		if (interpreterDetails.path) {
 			traceVerbose(
 				`Using interpreter from Python extension: ${interpreterDetails.path.join(" ")}`,
@@ -91,6 +95,7 @@ export async function activate(
 				outputChannel,
 				lsClient,
 			);
+
 			return;
 		}
 
@@ -118,6 +123,7 @@ export async function activate(
 
 	setImmediate(async () => {
 		const interpreter = getInterpreterFromSetting(serverId);
+
 		if (interpreter === undefined || interpreter.length === 0) {
 			traceLog(`Python extension loading`);
 			await initializePython(context.subscriptions);

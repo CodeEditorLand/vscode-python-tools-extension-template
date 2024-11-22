@@ -23,6 +23,7 @@ async function getPythonExtensionAPI(): Promise<PythonExtension | undefined> {
 		return _api;
 	}
 	_api = await PythonExtension.api();
+
 	return _api;
 }
 
@@ -56,6 +57,7 @@ export async function resolveInterpreter(
 	interpreter: string[],
 ): Promise<ResolvedEnvironment | undefined> {
 	const api = await getPythonExtensionAPI();
+
 	return api?.environments.resolveEnvironment(interpreter[0]);
 }
 
@@ -63,9 +65,11 @@ export async function getInterpreterDetails(
 	resource?: Uri,
 ): Promise<IInterpreterDetails> {
 	const api = await getPythonExtensionAPI();
+
 	const environment = await api?.environments.resolveEnvironment(
 		api?.environments.getActiveEnvironmentPath(resource),
 	);
+
 	if (environment?.executable.uri && checkVersion(environment)) {
 		return { path: [environment?.executable.uri.fsPath], resource };
 	}
@@ -74,6 +78,7 @@ export async function getInterpreterDetails(
 
 export async function getDebuggerPath(): Promise<string | undefined> {
 	const api = await getPythonExtensionAPI();
+
 	return api?.debug.getDebuggerPackagePath();
 }
 
@@ -82,6 +87,7 @@ export async function runPythonExtensionCommand(
 	...rest: any[]
 ) {
 	await getPythonExtensionAPI();
+
 	return await commands.executeCommand(command, ...rest);
 }
 
@@ -89,6 +95,7 @@ export function checkVersion(
 	resolved: ResolvedEnvironment | undefined,
 ): boolean {
 	const version = resolved?.version;
+
 	if (version?.major === 3 && version?.minor >= 8) {
 		return true;
 	}
@@ -97,5 +104,6 @@ export function checkVersion(
 	);
 	traceError(`Selected python path: ${resolved?.executable.uri?.fsPath}`);
 	traceError("Supported versions are 3.8 and above.");
+
 	return false;
 }
