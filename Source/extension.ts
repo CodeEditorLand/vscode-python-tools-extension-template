@@ -31,6 +31,7 @@ import {
 } from "./common/vscodeapi";
 
 let lsClient: LanguageClient | undefined;
+
 export async function activate(
 	context: vscode.ExtensionContext,
 ): Promise<void> {

@@ -93,6 +93,7 @@ async function createServer(
 }
 
 let _disposables: Disposable[] = [];
+
 export async function restartServer(
 	serverId: string,
 	serverName: string,
