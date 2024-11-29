@@ -59,6 +59,7 @@ async function createServer(
 		newEnv.USE_DEBUGPY === "False" || !isDebugScript
 			? settings.interpreter.slice(1).concat([SERVER_SCRIPT_PATH])
 			: settings.interpreter.slice(1).concat([DEBUG_SERVER_SCRIPT_PATH]);
+
 	traceInfo(`Server run command: ${[command, ...args].join(" ")}`);
 
 	const serverOptions: ServerOptions = {
@@ -102,10 +103,14 @@ export async function restartServer(
 ): Promise<LanguageClient | undefined> {
 	if (lsClient) {
 		traceInfo(`Server: Stop requested`);
+
 		await lsClient.stop();
+
 		_disposables.forEach((d) => d.dispose());
+
 		_disposables = [];
 	}
+
 	const projectRoot = await getProjectRoot();
 
 	const workspaceSetting = await getWorkspaceSettings(
@@ -124,7 +129,9 @@ export async function restartServer(
 			globalSettings: await getGlobalSettings(serverId, false),
 		},
 	);
+
 	traceInfo(`Server: Start requested.`);
+
 	_disposables.push(
 		newLSClient.onDidChangeState((e) => {
 			switch (e.newState) {
@@ -155,6 +162,7 @@ export async function restartServer(
 	}
 
 	const level = getLSClientTraceLevel(outputChannel.logLevel, env.logLevel);
+
 	await newLSClient.setTrace(level);
 
 	return newLSClient;

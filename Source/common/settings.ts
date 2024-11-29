@@ -13,12 +13,17 @@ import { getConfiguration, getWorkspaceFolders } from "./vscodeapi";
 
 export interface ISettings {
 	cwd: string;
+
 	workspace: string;
+
 	args: string[];
+
 	path: string[];
+
 	interpreter: string[];
 
 	importStrategy: string;
+
 	showNotifications: string;
 }
 
@@ -44,9 +49,11 @@ function resolveVariables(
 	if (home) {
 		substitutions.set("${userHome}", home);
 	}
+
 	if (workspace) {
 		substitutions.set("${workspaceFolder}", workspace.uri.fsPath);
 	}
+
 	substitutions.set("${cwd}", process.cwd());
 
 	getWorkspaceFolders().forEach((w) => {
@@ -57,6 +64,7 @@ function resolveVariables(
 		for (const [key, value] of substitutions) {
 			s = s.replace(key, value);
 		}
+
 		return s;
 	});
 }

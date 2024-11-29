@@ -45,10 +45,12 @@ export async function activate(
 
 	// Setup logging
 	const outputChannel = createOutputChannel(serverName);
+
 	context.subscriptions.push(outputChannel, registerLogger(outputChannel));
 
 	const changeLogLevel = async (c: vscode.LogLevel, g: vscode.LogLevel) => {
 		const level = getLSClientTraceLevel(c, g);
+
 		await lsClient?.setTrace(level);
 	};
 
@@ -63,7 +65,9 @@ export async function activate(
 
 	// Log Server information
 	traceLog(`Name: ${serverInfo.name}`);
+
 	traceLog(`Module: ${serverInfo.module}`);
+
 	traceVerbose(`Full Server Info: ${JSON.stringify(serverInfo)}`);
 
 	const runServer = async () => {
@@ -74,6 +78,7 @@ export async function activate(
 				traceVerbose(
 					`Using interpreter from ${serverInfo.module}.interpreter: ${interpreter.join(" ")}`,
 				);
+
 				lsClient = await restartServer(
 					serverId,
 					serverName,
@@ -81,6 +86,7 @@ export async function activate(
 					lsClient,
 				);
 			}
+
 			return;
 		}
 
@@ -90,6 +96,7 @@ export async function activate(
 			traceVerbose(
 				`Using interpreter from Python extension: ${interpreterDetails.path.join(" ")}`,
 			);
+
 			lsClient = await restartServer(
 				serverId,
 				serverName,
@@ -127,7 +134,9 @@ export async function activate(
 
 		if (interpreter === undefined || interpreter.length === 0) {
 			traceLog(`Python extension loading`);
+
 			await initializePython(context.subscriptions);
+
 			traceLog(`Python extension loaded`);
 		} else {
 			await runServer();
